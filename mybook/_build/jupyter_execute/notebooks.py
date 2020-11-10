@@ -6,21 +6,28 @@
 # In[1]:
 
 
+get_ipython().system(' jupyter labextension list')
+
+
+# In[2]:
+
+
 import panel as pn
 import hvplot.pandas
 from bokeh.sampledata.autompg import autompg
 
-pn.extension()
+pn.extension();
 
 def autompg_plot(x='mpg', y='hp', color='#058805'):
     return autompg.hvplot.scatter(x, y, c=color, padding=0.1)
 
 columns = list(autompg.columns[:-2])
+print(columns)
 
 
 # This is more text
 
-# In[2]:
+# In[3]:
 
 
 x = pn.widgets.Select(value='mpg', options=columns, name='x')
