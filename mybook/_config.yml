@@ -22,7 +22,7 @@ repository:
   branch: master  # Which branch of the repository should be used when creating links (optional)
 
 launch_buttons:
-  # noteebook_interface: "classic"
+  notebook_interface: "classic"
   # binderhub_url: "https://mybinder.org"
   thebe: true
 
