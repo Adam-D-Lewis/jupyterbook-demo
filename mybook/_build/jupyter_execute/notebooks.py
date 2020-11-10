@@ -1,76 +1,48 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Content with notebooks
-# 
-# You can also create content with Jupyter Notebooks. This means that you can include
-# code blocks and their outputs in your book.
-# 
-# ## Markdown + notebooks
-# 
-# As it is markdown, you can embed images, HTML, etc into your posts!
-# 
-# ![](https://myst-parser.readthedocs.io/en/latest/_static/logo.png)
-# 
-# You an also $add_{math}$ and
-# 
-# $$
-# math^{blocks}
-# $$
-# 
-# or
-# 
-# $$
-# \begin{aligned}
-# \mbox{mean} la_{tex} \\ \\
-# math blocks
-# \end{aligned}
-# $$
-# 
-# But make sure you \$Escape \$your \$dollar signs \$you want to keep!
-# 
-# ## MyST markdown
-# 
-# MyST markdown works in Jupyter Notebooks as well. For more information about MyST markdown, check
-# out [the MyST guide in Jupyter Book](https://jupyterbook.org/content/myst.html),
-# or see [the MyST markdown documentation](https://myst-parser.readthedocs.io/en/latest/).
-# 
-# ## Code blocks and outputs
-# 
-# Jupyter Book will also embed your code blocks and output in your book.
-# For example, here's some sample Matplotlib code:
+# # This is a title
 
 # In[1]:
 
 
-from matplotlib import rcParams, cycler
-import matplotlib.pyplot as plt
-import numpy as np
-plt.ion()
+import panel as pn
+import hvplot.pandas
+from bokeh.sampledata.autompg import autompg
 
+pn.extension()
+
+def autompg_plot(x='mpg', y='hp', color='#058805'):
+    return autompg.hvplot.scatter(x, y, c=color, padding=0.1)
+
+columns = list(autompg.columns[:-2])
+
+
+# This is more text
 
 # In[2]:
 
 
-# Fixing random state for reproducibility
-np.random.seed(19680801)
+x = pn.widgets.Select(value='mpg', options=columns, name='x')
+y = pn.widgets.Select(value='hp', options=columns, name='y')
+color = pn.widgets.ColorPicker(name='Color', value='#880588')
 
-N = 10
-data = [np.logspace(0, 1, 100) + np.random.randn(100) + ii for ii in range(N)]
-data = np.array(data).T
-cmap = plt.cm.coolwarm
-rcParams['axes.prop_cycle'] = cycler(color=cmap(np.linspace(0, 1, N)))
+layout = pn.Row(
+    pn.Column('## MPG Explorer', x, y, color),
+    autompg_plot(x.value, y.value, color.value))
 
+def update(event):
+    layout[1].object = autompg_plot(x.value, y.value, color.value)
 
-from matplotlib.lines import Line2D
-custom_lines = [Line2D([0], [0], color=cmap(0.), lw=4),
-                Line2D([0], [0], color=cmap(.5), lw=4),
-                Line2D([0], [0], color=cmap(1.), lw=4)]
+x.param.watch(update, 'value')
+y.param.watch(update, 'value')
+color.param.watch(update, 'value')
 
-fig, ax = plt.subplots(figsize=(10, 5))
-lines = ax.plot(data)
-ax.legend(custom_lines, ['Cold', 'Medium', 'Hot']);
+layout
 
 
-# There is a lot more that you can do with outputs (such as including interactive outputs)
-# with your book. For more information about this, see [the Jupyter Book documentation](https://jupyterbook.org)
+# In[ ]:
+
+
+
+
