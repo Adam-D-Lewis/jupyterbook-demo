@@ -9,7 +9,8 @@ dependencies:
 - jupyterlab
 # viz
 - holoviews
-- panel
-- pip
+- panel<0.10
+- hvplot
 - pip:
   - jupyter-book
+
