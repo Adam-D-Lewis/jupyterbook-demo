@@ -1,0 +1,15 @@
+# conda environment file
+name: jbook 
+channels:
+- conda-forge
+- defaults
+dependencies:
+- python
+- pandas
+- jupyterlab
+# viz
+- holoviews
+- panel
+- pip
+- pip:
+  - jupyter-book
