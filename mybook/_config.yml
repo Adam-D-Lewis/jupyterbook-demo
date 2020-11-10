@@ -22,9 +22,10 @@ repository:
   branch: master  # Which branch of the repository should be used when creating links (optional)
 
 launch_buttons:
-  noteebook_interface: "classic"
-  binderhub_url: "https://mybinder.org"
-  
+  # noteebook_interface: "classic"
+  # binderhub_url: "https://mybinder.org"
+  thebe: true
+
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
